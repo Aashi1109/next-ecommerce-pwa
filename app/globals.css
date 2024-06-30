@@ -22,6 +22,10 @@
   .flex-between {
     @apply flex justify-between items-center;
   }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer components {
@@ -30,9 +34,9 @@
     /* border-top-right-radius: 50%; */
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 500px) {
     .footer {
-      clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%);
+      clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%) !important;
       /* border-top-right-radius: 50%; */
     }
   }

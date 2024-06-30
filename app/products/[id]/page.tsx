@@ -1,8 +1,10 @@
+import {
+  ProductDetails,
+  ProductImages,
+  ProductReviews,
+} from "@/components/products";
 import config from "@/config";
 import { IProduct } from "@/types";
-import ProductDetails from "./ProductDetails";
-import ProductImages from "./ProductImages";
-import ProductReviews from "./ProductReviews";
 
 const ProductPage = async ({ params }: { params: { id: number } }) => {
   const { id } = params;
@@ -11,7 +13,7 @@ const ProductPage = async ({ params }: { params: { id: number } }) => {
 
   return (
     <div className="">
-      <div className="flex flex-col sm:flex-row">
+      <div className="flex flex-col md:flex-row">
         <ProductImages images={productData.images} title={productData.title} />
         <ProductDetails productData={productData} />
       </div>

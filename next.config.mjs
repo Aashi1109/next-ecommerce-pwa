@@ -6,6 +6,7 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== "development",
   },
+  output: "standalone",
   images: {
     remotePatterns: [
       {

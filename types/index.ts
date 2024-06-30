@@ -13,6 +13,7 @@ export interface IProduct {
   warrantyInformation: string;
   shippingInformation: string;
   tags: string[];
+  stock: number;
 }
 
 export interface IReview {
@@ -33,3 +34,24 @@ export interface IFetchProductsParams {
   emptyRequestCount?: number;
   currentFilteredProducts?: IProduct[];
 }
+
+export interface ICartTotals {
+  originalTotal: number;
+  discountedTotal: number;
+}
+
+// types for global store
+export interface ICartProduct extends IProduct {
+  quantity: number;
+}
+
+export interface IAppState {
+  cart: { products: ICartProduct[] };
+  likedProducts: number[];
+}
+// Define the type for the cart actions
+export type IAppActions =
+  | { type: "ADD_TO_CART"; product: ICartProduct }
+  | { type: "REMOVE_FROM_CART"; productId: number }
+  | { type: "UPDATE_QUANTITY"; productId: number; quantity: number }
+  | { type: "TOGGLE_PRODUCT_LIKE"; productId: number };

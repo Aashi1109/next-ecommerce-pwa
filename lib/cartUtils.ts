@@ -1,6 +1,6 @@
 // utils/cartUtils.ts
 
-import { IAppState } from "@/context/AppContext";
+import { IAppState, ICartTotals } from "@/types";
 
 /**
  * Checks if a product is already in the cart.
@@ -17,4 +17,19 @@ export const isProductInCart = (
 
 export const getNumberOfProductsInCart = (cart: IAppState["cart"]) => {
   return cart.products.length;
+};
+
+export const getTotalAmountDiscountInCart = (
+  cart: IAppState["cart"]
+): ICartTotals => {
+  return cart.products.reduce(
+    (acc, product) => {
+      const discountAmount = (product.price * product.discountPercentage) / 100;
+      acc.originalTotal += product.price * product.quantity;
+      acc.discountedTotal +=
+        (product.price - discountAmount) * product.quantity;
+      return acc;
+    },
+    { originalTotal: 0, discountedTotal: 0 }
+  );
 };

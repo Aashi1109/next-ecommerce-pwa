@@ -1,8 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const ImageViewer = ({
   images,
@@ -14,6 +15,19 @@ const ImageViewer = ({
   const [selectedImage, setSelectedImage] = useState(
     images.length ? images[0] : null
   );
+  const loaderRef = useRef<HTMLDivElement>(null);
+
+  const handleThumbnailClick = (image: string) => {
+    setSelectedImage(image);
+    if (loaderRef.current) {
+      loaderRef.current.style.display = "flex";
+    }
+  };
+  const handleOnLoad = () => {
+    if (loaderRef.current) {
+      loaderRef.current.style.display = "none";
+    }
+  };
 
   return (
     <div className="flex gap-2 w-full h-[400px]">
@@ -33,7 +47,7 @@ const ImageViewer = ({
             key={index}
             width={60}
             height={60}
-            onClick={() => setSelectedImage(image)}
+            onClick={() => handleThumbnailClick(image)}
           />
         ))}
       </div>
@@ -44,8 +58,13 @@ const ImageViewer = ({
             className="object-contain w-full h-full"
             src={selectedImage}
             alt={title}
+            onLoad={handleOnLoad}
             fill
           />
+
+          <div className="flex-center h-full w-full" ref={loaderRef}>
+            <Loader2 className="animate-spin" />
+          </div>
         </div>
       )}
     </div>

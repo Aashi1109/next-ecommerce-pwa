@@ -1,0 +1,10 @@
+services:
+  next-ecommerce-pwa:
+    build: .
+    image: aashishpal09/next-ecommerce-pwa:1.0.0
+    container_name: next-ecommerce-pwa
+    restart: always
+    env_file:
+      - ./.env.prod
+    ports:
+      - "3000:3000"

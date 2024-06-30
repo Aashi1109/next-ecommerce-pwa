@@ -45,26 +45,36 @@ const HorizontalProductScrollList = ({ products, title }: IProps) => {
   };
 
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.addEventListener(
-        "scroll",
-        checkScrollPosition
-      );
-      checkScrollPosition(); // Initial check
+    const checkScrollPosition = () => {
+      if (!scrollContainerRef.current) return;
 
-      return () => {
-        scrollContainerRef.current?.removeEventListener(
-          "scroll",
-          checkScrollPosition
-        );
-      };
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+
+      setIsLeftDisabled(scrollLeft === 0);
+      setIsRightDisabled(scrollLeft + clientWidth >= scrollWidth);
+    };
+
+    const scrollHandler = () => {
+      checkScrollPosition();
+    };
+
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.addEventListener("scroll", scrollHandler);
+      checkScrollPosition(); // Initial check
     }
+
+    return () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.removeEventListener("scroll", scrollHandler);
+      }
+    };
   }, []);
 
   return (
     <div className="flex flex-col gap-4">
       {/* header with buttons */}
-      <div className="flex-between">
+      <div className="flex-between ">
         <p className="heading-1">{title}</p>
         {!isButtonDisabled && (
           <ScrollActionButtons
@@ -82,7 +92,7 @@ const HorizontalProductScrollList = ({ products, title }: IProps) => {
       <ProductList
         products={products}
         ref={scrollContainerRef}
-        classes="overflow-hidden"
+        classes="overflow-x-auto whitespace-nowrap scrollbar-hidden"
       />
     </div>
   );

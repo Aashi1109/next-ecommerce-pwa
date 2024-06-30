@@ -1,5 +1,5 @@
 "use client";
-import { addToCart, removeFromCart } from "@/context/AppProvider";
+import { addToCart, removeFromCart } from "@/context/appAction";
 import { useAppState } from "@/hooks";
 import { isProductInCart } from "@/lib/cartUtils";
 import { IProduct } from "@/types";
@@ -19,7 +19,7 @@ const ProductActionButtons = ({ productData }: { productData: IProduct }) => {
   };
 
   return (
-    <div className="flex-start gap-4">
+    <div className="flex-start gap-4 mb-6 lg:mb-0">
       <button
         type="button"
         className="flex-center gap-2 button"
